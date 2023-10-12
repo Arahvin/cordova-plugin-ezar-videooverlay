@@ -19,6 +19,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.rmi.CORBA.Util;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
@@ -283,7 +285,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
             startRecordingVideo();
             return true;
         } else if (action.equals("stopRecordingVideo")) {
-            stopRecordingVideo();
+            stopRecordingVideo(callbackContext);
             return true;
         }
 
@@ -1184,7 +1186,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 		mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
 		mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 		mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
-		String internalStorageDir = getFilesDir().getAbsolutePath();
+		String internalStorageDir = Context.getFilesDir().getAbsolutePath();
 		String videoFilePath = internalStorageDir + "/video.mp4";
 		mMediaRecorder.setOutputFile(videoFilePath);
 		//mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
@@ -1205,7 +1207,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 				mMediaRecorder.release();
 				mMediaRecorder = null;
 				mCamera.lock();
-				String internalStorageDir = getFilesDir().getAbsolutePath();
+				String internalStorageDir = Context.getFilesDir().getAbsolutePath();
 				String videoFilePath = internalStorageDir + "/video.mp4";
 				callbackContext.success(videoFilePath);
 			}

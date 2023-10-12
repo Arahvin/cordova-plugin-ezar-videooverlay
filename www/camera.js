@@ -251,6 +251,38 @@ var Camera = function(ezar,cameraData) {
     this.isStopped = function() {
         return !_self.isRunning();
     };
+
+    this.startRecording = function() {
+        exec(
+            function() {
+                // Success callback for startRecordingVideo
+                console.log("Video recording started.");
+            },
+            function(error) {
+                // Error callback for startRecordingVideo
+                console.error("Error starting video recording: " + error);
+            },
+            "videoOverlay",
+            "startRecordingVideo",
+            []
+        );
+    }
+
+    this.stopRecording = function() {
+        exec(
+            function() {
+                // Success callback for stopRecordingVideo
+                console.log("Video recording stopped.");
+            },
+            function(error) {
+                // Error callback for stopRecordingVideo
+                console.error("Error stopping video recording: " + error);
+            },
+            "videoOverlay",
+            "stopRecordingVideo",
+            []
+        );
+    }
     
 }
 

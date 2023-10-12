@@ -252,7 +252,7 @@ var Camera = function(ezar,cameraData) {
         return !_self.isRunning();
     };
 
-    this.startRecording = function() {
+    this.startRecording = function(successCallback,errorCallback) {
         exec(
             function() {
                 // Success callback for startRecordingVideo
@@ -260,7 +260,7 @@ var Camera = function(ezar,cameraData) {
             },
             function(error) {
                 // Error callback for startRecordingVideo
-                console.error("Error starting video recording: " + error);
+                errorCallback(error);
             },
             "videoOverlay",
             "startRecordingVideo",
@@ -268,7 +268,7 @@ var Camera = function(ezar,cameraData) {
         );
     }
 
-    this.stopRecording = function() {
+    this.stopRecording = function(successCallback,errorCallback) {
         exec(
             function() {
                 // Success callback for stopRecordingVideo
@@ -276,7 +276,7 @@ var Camera = function(ezar,cameraData) {
             },
             function(error) {
                 // Error callback for stopRecordingVideo
-                console.error("Error stopping video recording: " + error);
+                errorCallback(error);
             },
             "videoOverlay",
             "stopRecordingVideo",

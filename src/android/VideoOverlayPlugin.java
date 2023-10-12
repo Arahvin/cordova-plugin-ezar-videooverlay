@@ -1177,17 +1177,21 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 	}
 
 	public void startRecordingVideo() {
-		mCamera = Camera.open(getCameraId(CameraDirection.valueOf("FRONT")));
-		mMediaRecorder = new MediaRecorder();
-		mCamera.unlock();
-		mMediaRecorder.setCamera(mCamera);
-		mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
-		mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-		mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
-		String internalStorageDir = activity.getApplicationContext().getFilesDir().getAbsolutePath();
-		String videoFilePath = internalStorageDir + "/video.mp4";
-		mMediaRecorder.setOutputFile(videoFilePath);
-		//mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
+		try {
+			mCamera = Camera.open(getCameraId(CameraDirection.valueOf("FRONT")));
+			mMediaRecorder = new MediaRecorder();
+			mCamera.unlock();
+			mMediaRecorder.setCamera(mCamera);
+			mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+			mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+			mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
+			String internalStorageDir = activity.getApplicationContext().getFilesDir().getAbsolutePath();
+			String videoFilePath = internalStorageDir + "/video.mp4";
+			mMediaRecorder.setOutputFile(videoFilePath);
+			//mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
+		} catch (Exception e) {
+			Log.e(TAG, "Error starting recording: " + e.getMessage());
+		}
 	
 		try {
 			mMediaRecorder.prepare();

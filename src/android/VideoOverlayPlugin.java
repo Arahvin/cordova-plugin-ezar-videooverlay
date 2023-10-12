@@ -1183,7 +1183,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 		mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 		mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
 		mMediaRecorder.setOutputFile("YOUR_VIDEO_FILE_PATH.mp4");
-		mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
+		//mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
 	
 		try {
 			mMediaRecorder.prepare();

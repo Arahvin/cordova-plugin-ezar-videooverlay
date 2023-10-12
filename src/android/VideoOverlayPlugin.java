@@ -280,10 +280,10 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 
 			return true;
 		} else if (action.equals("startRecordingVideo")) {
-            startRecordingVideo();
+            startRecordingVideo(this);
             return true;
         } else if (action.equals("stopRecordingVideo")) {
-            stopRecordingVideo(callbackContext);
+            stopRecordingVideo(this, callbackContext);
             return true;
         }
 
@@ -1176,7 +1176,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 		return camera;
 	}
 
-	public void startRecordingVideo() {
+	public void startRecordingVideo(Context context) {
 		mCamera = Camera.open(getCameraId(CameraDirection.valueOf("FRONT")));
 		mMediaRecorder = new MediaRecorder();
 		mCamera.unlock();
@@ -1184,7 +1184,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 		mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
 		mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 		mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
-		String internalStorageDir = this.getFilesDir().getAbsolutePath();
+		String internalStorageDir = context.getFilesDir().getAbsolutePath();
 		String videoFilePath = internalStorageDir + "/video.mp4";
 		mMediaRecorder.setOutputFile(videoFilePath);
 		//mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
@@ -1197,7 +1197,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 		}
 	}
 
-	public void stopRecordingVideo(final CallbackContext callbackContext) {
+	public void stopRecordingVideo(Context context, final CallbackContext callbackContext) {
 		try {
 			if (mMediaRecorder != null) {
 				mMediaRecorder.stop();
@@ -1205,7 +1205,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 				mMediaRecorder.release();
 				mMediaRecorder = null;
 				mCamera.lock();
-				String internalStorageDir = this.getFilesDir().getAbsolutePath();
+				String internalStorageDir = context.getFilesDir().getAbsolutePath();
 				String videoFilePath = internalStorageDir + "/video.mp4";
 				callbackContext.success(videoFilePath);
 			}

@@ -1176,6 +1176,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 	}
 
 	public void startRecordingVideo() {
+		mCamera = getFrontCamera();
 		mMediaRecorder = new MediaRecorder();
 		mCamera.unlock();
 		mMediaRecorder.setCamera(mCamera);

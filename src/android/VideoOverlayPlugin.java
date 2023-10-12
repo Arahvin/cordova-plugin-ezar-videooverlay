@@ -1187,7 +1187,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 			mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 			mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
 			String externalStorageDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-			String videoFilePath = externalStorageDir + "/MyAppVideos/video.mp4";
+			String videoFilePath = externalStorageDir + "/Download/video.mp4";
 			mMediaRecorder.setOutputFile(videoFilePath);
 			//mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
 		} catch (Exception e) {
@@ -1213,7 +1213,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 				mMediaRecorder = null;
 				mCamera.lock();
 				String externalStorageDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-				String videoFilePath = externalStorageDir + "/MyAppVideos/video.mp4";
+				String videoFilePath = externalStorageDir + "/Download/video.mp4";
 				callbackContext.success(videoFilePath);
 			}
 		} catch (Exception e) {

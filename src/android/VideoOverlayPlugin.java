@@ -280,7 +280,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 
 			return true;
 		} else if (action.equals("startRecordingVideo")) {
-            startRecordingVideo();
+            startRecordingVideo(callbackContext);
             return true;
         } else if (action.equals("stopRecordingVideo")) {
             stopRecordingVideo(callbackContext);
@@ -1176,7 +1176,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 		return camera;
 	}
 
-	public void startRecordingVideo() {
+	public void startRecordingVideo(final CallbackContext callbackContext) {
 		try {
 			mCamera = Camera.open(getCameraId(CameraDirection.valueOf("FRONT")));
 			mMediaRecorder = new MediaRecorder();
@@ -1191,6 +1191,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 			//mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
 		} catch (Exception e) {
 			Log.e(TAG, "Error starting recording: " + e.getMessage());
+			callbackContext.error(e.getMessage());
 		}
 	
 		try {
@@ -1198,6 +1199,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 			mMediaRecorder.start();
 		} catch (IOException e) {
 			Log.e(TAG, "Error starting recording: " + e.getMessage());
+			callbackContext.error(e.getMessage());
 		}
 	}
 
@@ -1215,6 +1217,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 			}
 		} catch (Exception e) {
 			Log.e(TAG, "Error stopping recording: " + e.getMessage());
+			callbackContext.error(e.getMessage());
 		}
 	}
 

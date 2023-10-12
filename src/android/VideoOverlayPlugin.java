@@ -56,6 +56,7 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 
+import android.os.Environment;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 

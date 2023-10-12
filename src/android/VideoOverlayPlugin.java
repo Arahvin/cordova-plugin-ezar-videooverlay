@@ -1204,7 +1204,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 				mMediaRecorder = null;
 				mCamera.lock();
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			Log.e(TAG, "Error stopping recording: " + e.getMessage());
 		}
 	}

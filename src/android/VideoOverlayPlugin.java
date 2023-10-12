@@ -1184,7 +1184,9 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 		mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
 		mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 		mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
-		mMediaRecorder.setOutputFile("YOUR_VIDEO_FILE_PATH.mp4");
+		String internalStorageDir = getFilesDir().getAbsolutePath();
+		String videoFilePath = internalStorageDir + "/video.mp4";
+		mMediaRecorder.setOutputFile(videoFilePath);
 		//mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
 	
 		try {
@@ -1195,7 +1197,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 		}
 	}
 
-	public void stopRecordingVideo() {
+	public void stopRecordingVideo(final CallbackContext callbackContext) {
 		try {
 			if (mMediaRecorder != null) {
 				mMediaRecorder.stop();
@@ -1203,6 +1205,9 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 				mMediaRecorder.release();
 				mMediaRecorder = null;
 				mCamera.lock();
+				String internalStorageDir = getFilesDir().getAbsolutePath();
+				String videoFilePath = internalStorageDir + "/video.mp4";
+				callbackContext.success(videoFilePath);
 			}
 		} catch (Exception e) {
 			Log.e(TAG, "Error stopping recording: " + e.getMessage());

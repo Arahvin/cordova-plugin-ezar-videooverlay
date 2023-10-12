@@ -19,8 +19,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.rmi.CORBA.Util;
-
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;

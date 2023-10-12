@@ -109,7 +109,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 	private Camera mCamera;
 	private MediaRecorder mMediaRecorder;
 
-	protected final static String[] permissions = {Manifest.permission.CAMERA};
+	protected final static String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO};
 	public final static int PERMISSION_DENIED_ERROR = 20;
 	public final static int CAMERA_SEC = 0;
 
@@ -324,8 +324,9 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 			});
 		}
 
-		if (!PermissionHelper.hasPermission(this, permissions[0])) {
+		if (!PermissionHelper.hasPermission(this, permissions[0]) || !PermissionHelper.hasPermission(this, permissions[1])) {
 			PermissionHelper.requestPermission(this, CAMERA_SEC, Manifest.permission.CAMERA);
+			PermissionHelper.requestPermission(this, CAMERA_SEC, Manifest.permission.RECORD_AUDIO);
 			return;
 		}
 

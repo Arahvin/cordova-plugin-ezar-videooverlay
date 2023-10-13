@@ -19,8 +19,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.rmi.CORBA.Util;
-
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
@@ -57,9 +55,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
-
-import android.media.CamcorderProfile;
-import android.media.MediaRecorder;
 
 
 /**
@@ -107,9 +102,6 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 	private boolean meteringAreaSupported;
 	private boolean aeLockSupported;
 	private boolean awbLockSupported;
-
-	private Camera mCamera;
-	private MediaRecorder mMediaRecorder;
 
 	protected final static String[] permissions = {Manifest.permission.CAMERA};
 	public final static int PERMISSION_DENIED_ERROR = 20;
@@ -281,13 +273,7 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 			this.resetFocus(callbackContext);
 
 			return true;
-		} else if (action.equals("startRecordingVideo")) {
-            startRecordingVideo();
-            return true;
-        } else if (action.equals("stopRecordingVideo")) {
-            stopRecordingVideo();
-            return true;
-        }
+		}
 
 		return false;
 	}
@@ -1175,34 +1161,6 @@ public class VideoOverlayPlugin extends CordovaPlugin implements Camera.PreviewC
 			camera = this.camera;
 		}
 		return camera;
-	}
-
-	public void startRecordingVideo() {
-		mMediaRecorder = new MediaRecorder();
-		mCamera.unlock();
-		mMediaRecorder.setCamera(mCamera);
-		mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
-		mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-		mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
-		mMediaRecorder.setOutputFile("YOUR_VIDEO_FILE_PATH.mp4");
-		mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
-	
-		try {
-			mMediaRecorder.prepare();
-			mMediaRecorder.start();
-		} catch (IOException e) {
-			Log.e(TAG, "Error starting recording: " + e.getMessage());
-		}
-	}
-
-	public void stopRecordingVideo() {
-		if (mMediaRecorder != null) {
-			mMediaRecorder.stop();
-			mMediaRecorder.reset();
-			mMediaRecorder.release();
-			mMediaRecorder = null;
-			mCamera.lock();
-		}
 	}
 
 	public int getActiveCameraDirection() {
